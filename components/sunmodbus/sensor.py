@@ -13,6 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# Copyright (C) 2025  Bo
+#
+# GPL header osv…
+
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import uart, sensor
@@ -38,7 +42,7 @@ DATA_TYPE_ENUM = cv.enum({
     "int16": DataType.TYPE_INT16,
 }, upper=False)
 
-CONFIG_SCHEMA = sensor.sensor_schema().extend({
+CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SunModbus),
 
     cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
@@ -49,6 +53,9 @@ CONFIG_SCHEMA = sensor.sensor_schema().extend({
     cv.Required(CONF_SCALE): cv.float_,
     cv.Required(CONF_TYPE): DATA_TYPE_ENUM,
     cv.Optional(CONF_UPDATE_INTERVAL, default="1s"): cv.positive_time_period_milliseconds,
+
+    # Sensor definition
+    cv.Required("name"): cv.string,
 }).extend(cv.COMPONENT_SCHEMA)
 
 
